@@ -1,0 +1,36 @@
+(declare-const p Bool)
+(declare-const q Bool)
+(declare-const r Bool)
+(declare-const t Bool)
+(declare-const s Bool)
+(declare-const u Bool)
+(declare-const v Bool)
+(declare-const y Bool)
+(declare-const z Bool)
+(declare-const a Bool)
+(declare-const b Bool)
+(declare-const c Bool)
+
+(assert
+(or
+(and
+(or
+(and(and p q r) (and s t u) (and v y z))
+(or (and p s v) (and r u z) (and y q t))
+(and (or p t z) (or r t v) (or p u y))
+) a b)
+(and (or
+(or (and(and p q r) (and s t u) (and v y z)) (or (and p s v) (and r u z) (and y q t)) (and (or p t z) (or r t v) (or p u y)))
+(and (not v) (not t) (not r))
+(or (not p) y (not z))
+) b (not c))
+(or
+(or p s z)
+(or(not a) (not b) (not c))
+(or (not a) (not q) (not r))
+)
+)
+
+)
+(check-sat)
+(get-model)
