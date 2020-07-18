@@ -1,0 +1,18 @@
+(declare-const p Bool)
+(declare-const q Bool)
+(declare-const r Bool)
+(declare-const t Bool)
+(declare-const s Bool)
+(declare-const u Bool)
+(declare-const v Bool)
+(declare-const y Bool)
+(declare-const z Bool)
+(assert
+(or
+(and(and p q r) (and s t u) (and v y z))
+(or (and p s v) (and r u z) (and y q t))
+(and (or p t z) (or r t v) (or p u y))
+)
+)
+(check-sat)
+(get-model)
