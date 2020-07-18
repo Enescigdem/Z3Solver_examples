@@ -1,0 +1,148 @@
+;;declare variables
+(declare-const p1y1 Bool)
+(declare-const p1y2 Bool)
+(declare-const p1y3 Bool)
+(declare-const p1y4 Bool)
+(declare-const p2y1 Bool)
+(declare-const p2y2 Bool)
+(declare-const p2y3 Bool)
+(declare-const p2y4 Bool)
+(declare-const p3y1 Bool)
+(declare-const p3y2 Bool)
+(declare-const p3y3 Bool)
+(declare-const p3y4 Bool)
+(declare-const p4y1 Bool)
+(declare-const p4y2 Bool)
+(declare-const p4y3 Bool)
+(declare-const p4y4 Bool)
+
+;;should be 1 queen per line
+
+(assert 
+(or
+(or p1y1 p1y2)
+(or p1y3 p1y4)
+)
+)
+;
+(assert 
+(or
+(or p2y1 p2y2)
+(or p2y3 p2y4)
+)
+)
+;
+(assert 
+(or
+(or p3y1 p3y2)
+(or p3y3 p3y4)
+)
+)
+;
+(assert 
+(or
+(or p4y1 p4y2)
+(or p4y3 p4y4)
+)
+)
+;
+;;checking the condition at most 1 queen on same column
+
+(assert 
+(not 
+(or 
+(and p1y1 p3y1) (and p2y1 p1y1) (and p2y1 p4y1) (and p3y1 p2y1) (and p4y1 p1y1) (and p4y1 p3y1)
+)
+))
+(assert 
+(not 
+(or (and p1y2 p3y2) (and p2y2 p1y2) (and p2y2 p4y2) (and p3y2 p2y2) (and p4y2 p1y2) (and p4y2 p3y2))
+))
+(assert 
+(not 
+(or 
+(and p1y3 p3y3) (and p2y3 p1y3) (and p2y3 p4y3) (and p3y3 p2y3) (and p4y3 p1y3) (and p4y3 p3y3)
+)
+)
+)
+(assert 
+(not 
+(or 
+(and p1y4 p3y4)(and p2y4 p1y4)(and p2y4 p4y4)(and p3y4 p2y4)(and p4y4 p1y4)(and p4y4 p3y4)
+)
+))
+;
+;;checking the condition at most 1 queen on same row
+
+(assert 
+(not 
+(or (and p1y1 p1y3)(and p1y2 p1y1)(and p1y2 p1y4)(and p1y3 p1y2)(and p1y4 p1y1)(and p1y4 p1y3))))
+(assert 
+(not 
+(or (and p2y1 p2y3)(and p2y2 p2y1)(and p2y2 p2y4)(and p2y3 p2y2)(and p2y4 p2y1)(and p2y4 p2y3))))
+(assert 
+(not 
+(or (and p3y1 p3y3)(and p3y2 p3y1)(and p3y2 p3y4)(and p3y3 p3y2)(and p3y4 p3y1)(and p3y4 p3y3))))
+(assert 
+(not 
+(or (and p4y1 p4y3)(and p4y2 p4y1)(and p4y2 p4y4)(and p4y3 p4y2)(and p4y4 p4y1)(and p4y4 p4y3))
+))
+;
+;;check the diagonal line where the queen is there
+;
+; " \  " diagonals
+;;;;;;by checking the binary permutations of cells
+(assert 
+(not (or (and p3y1 p4y2)(and p4y2 p3y1))))
+(assert 
+(not 
+(or (and p2y1 p3y2)(and p2y1 p4y3)(and p3y2 p2y1)(and p3y2 p4y3)(and p4y3 p2y1)(and p4y3 p3y2)))
+)
+(assert 
+(not (or 
+(and p1y1 p2y2)(and p1y1 p3y3)(and p1y1 p4y4)
+(and p2y2 p1y1)(and p2y2 p3y3)(and p2y2 p4y4)
+(and p3y3 p1y1)(and p3y3 p2y2)(and p3y3 p4y4)
+(and p4y4 p1y1)(and p4y4 p2y2)(and p4y4 p3y3)
+))
+)
+(assert 
+(not (or (and p1y2 p2y3)(and p1y2 p3y4)(and p2y3 p1y2)(and p2y3 p3y4)(and p3y4 p1y2)(and p3y4 p2y3))))
+(assert 
+(not (or (and p1y3 p2y4)(and p2y4 p1y3))))
+
+; " /  " diagonals
+;by checking the binary permutations of cells
+(assert 
+(not 
+(or (and p2y1 p1y2)(and p1y2 p2y1))
+)
+)
+(assert 
+(not 
+(or (and p3y1 p2y2)(and p3y1 p1y3)(and p2y2 p3y1)(and p2y2 p1y3)(and p1y3 p3y1)(and p1y3 p2y2))
+))
+(assert 
+(not 
+(or 
+(and p4y1 p3y2)(and p4y1 p2y3)(and p4y1 p1y4)
+(and p3y2 p4y1)(and p3y2 p2y3)(and p3y2 p1y4)
+(and p2y3 p4y1)(and p2y3 p3y2)(and p2y3 p1y4)
+(and p1y4 p4y1)(and p1y4 p3y2)(and p1y4 p2y3)
+)
+))
+(assert 
+(not 
+(or (and p4y2 p3y3)(and p4y2 p2y4)(and p3y3 p4y2)(and p3y3 p2y4)(and p2y4 p4y2)(and p2y4 p3y3))
+)
+)
+
+(assert 
+(not (or (and p4y3 p3y4)(and p3y4 p4y3)))
+)
+
+
+
+
+(check-sat)
+(get-model)
